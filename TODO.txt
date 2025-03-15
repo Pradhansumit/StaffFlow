@@ -1,0 +1,5 @@
+[x] Setting up project.
+  [] Setting up frontend and backend.
+[] Connecting frontend and backend.
+[] Working with authenticating user.
+  [] Setting up JWT token authentication.

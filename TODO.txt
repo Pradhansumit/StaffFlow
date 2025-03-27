@@ -1,5 +1,54 @@
+[Information]
+alias b -> Backend | f -> Frontend
+
 [x] Setting up project.
-  [] Setting up frontend and backend.
-[] Connecting frontend and backend.
-[] Working with authenticating user.
-  [] Setting up JWT token authentication.
+[x] Setting up frontend and backend.
+[x] Connecting frontend and backend.
+
+---------- Authentication and Authorization ----------
+
+[] b: Creating user model.
+[] b: Working with authenticating user.
+
+[] f: UI Creating the login interface.
+[] f: UI Creating registration interface.
+
+---------- Admin Panel ---------
+
+[] f: UI Creating Admin Panel.
+[] f: UI creating admin dashboard.
+
+---------- Employee ------------
+
+[] b: Creating Employee table (FK with User table)
+[] b: When creating empl table it would automatically create username and password for the employee..
+[] b: Views: Creating logic for Add, Delete, Update or View one/all empl.
+
+[] f: UI Employee dashboard.
+[] f: UI Employee dashboard has check in check out layout.
+[] f: UI Employee can see their profile.
+[] f: UI Apply for leave.
+[] f: 
+
+-- Admin Panel
+[] f: UI Creating list view for all empl.
+[] f: UI Creating a profile page for looking into the details of particular employee.
+[] f: UI Form for creating new empl.
+[] f: UI Form for retrieving and/or updating particular empl details.
+
+---------- Attendance ----------
+
+[] b: Creating attendance table.
+[] b: Employee is marked attendance and counts the time emp worked by Admin.
+
+[] f: UI Daywise list view for all empl attendance (Attendance Sheet).
+[] f: UI List wise see the attendance of users can update it for present day.
+[] f: Employees can see their see their attendance in their panels.
+
+---------- Holidays ----------
+
+[] f: UI Form(s) for creating holiday, adding holiday or editing holiday.
+[] f: UI list view of seeing all the holidays.
+
+[] b: Creating holiday model.
+[] b: Not adding holidays in payment deducation.

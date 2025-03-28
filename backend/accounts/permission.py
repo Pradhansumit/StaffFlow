@@ -6,3 +6,10 @@ class Admin_Permission(BasePermission):
 
     def has_permission(self, request, view):
         return request.user.is_authenticated and request.user.role == 1
+
+
+class Employee_Permission(BasePermission):
+    message = "It is reserved for employee."
+
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and request.user.role == 0

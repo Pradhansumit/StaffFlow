@@ -7,10 +7,10 @@ alias b -> Backend | f -> Frontend
 
 ---------- Authentication and Authorization ----------
 
-[] b: Creating user model.
-[] b: Working with authenticating user.
+[x] b: Creating user model.
+[x] b: Working with authenticating user.
 
-[] f: UI Creating the login interface.
+[x] f: UI Creating the login interface.
 [] f: UI Creating registration interface.
 
 ---------- Admin Panel ---------
@@ -38,7 +38,8 @@ alias b -> Backend | f -> Frontend
 
 ---------- Attendance ----------
 
-[] b: Creating attendance table.
+[x] b: Creating attendance table.
+[x] b: Created check in check out logic.
 [] b: Employee is marked attendance and counts the time emp worked by Admin.
 
 [] f: UI Daywise list view for all empl attendance (Attendance Sheet).

@@ -20,15 +20,14 @@ alias b -> Backend | f -> Frontend
 
 ---------- Employee ------------
 
-[] b: Creating Employee table (FK with User table)
-[] b: When creating empl table it would automatically create username and password for the employee..
+[x] b: Creating Employee table (FK with User table)
+[x] b: When creating empl table it would automatically create username and password for the employee..
 [] b: Views: Creating logic for Add, Delete, Update or View one/all empl.
 
 [] f: UI Employee dashboard.
 [] f: UI Employee dashboard has check in check out layout.
 [] f: UI Employee can see their profile.
 [] f: UI Apply for leave.
-[] f: 
 
 -- Admin Panel
 [] f: UI Creating list view for all empl.
@@ -53,3 +52,15 @@ alias b -> Backend | f -> Frontend
 
 [] b: Creating holiday model.
 [] b: Not adding holidays in payment deducation.
+[] b: Reflecting holidays in attendance employee. 
+
+
+---------- Leave Management ----------
+
+[x] b: Creating 'Leave Type' table.
+[x] b: Creating 'Leave Request' table.
+[] b: Creating leave by employee. 
+[] b: Approving leave by admin.
+[] b: Reflecting leave in attendance for that particular employee. 
+
+

@@ -37,6 +37,7 @@ THIRD_PARTY_APPS = [
 CUSTOM_APPS = [
     "accounts",
     "attendance",
+    "leave",
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + CUSTOM_APPS

@@ -44,7 +44,7 @@ class LeaveRequest(models.Model):
         approved = 0
         pending = 1
 
-    employee = models.ForeignKey("accounts.CustomUser", on_delete=models.CASCADE)
+    employee = models.ForeignKey("accounts.Employee", on_delete=models.CASCADE)
     leave_type = models.ForeignKey("leave.LeaveType", on_delete=models.PROTECT)
     duration = models.IntegerField(null=False, blank=False)
     unit = models.IntegerField(
@@ -58,7 +58,7 @@ class LeaveRequest(models.Model):
         default=LeaveStatus.pending,
     )
     request_time = models.DateTimeField(auto_now_add=True)
-    approved_time = models.DateTimeField()
+    approved_time = models.DateTimeField(blank=True, null=True)
 
     def __str__(self) -> str:
         return self.employee.first_name + " " + self.status + " " + self.duration

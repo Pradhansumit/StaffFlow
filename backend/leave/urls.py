@@ -1,30 +1,54 @@
 from django.urls import path
 from leave.views import (
     Admin_Add_LeaveType,
+    Admin_Approve_LeaveRequest,
     Admin_Delete_LeaveType,
     Admin_List_LeaveType,
     Admin_Update_LeaveType,
+    Admin_View_LeaveRequests,
+    Employee_Add_LeaveRequest,
+    Employee_ViewAll_LeaveRequest,
 )
 
 urlpatterns = [
     path(
-        "add/",
+        "leave-type/add/",
         Admin_Add_LeaveType.as_view(),
         name="Admin_Add_LeaveType",
     ),
     path(
-        "delete/",
+        "leave-type/delete/",
         Admin_Delete_LeaveType.as_view(),
         name="Admin_Delete_LeaveType",
     ),
     path(
-        "list/",
+        "leave-type/list/",
         Admin_List_LeaveType.as_view(),
         name="Admin_List_LeaveType",
     ),
     path(
-        "update/",
+        "leave-type/update/",
         Admin_Update_LeaveType.as_view(),
         name="Admin_Update_LeaveType",
+    ),
+    path(
+        "leave-request/employee/request-leave/",
+        Employee_Add_LeaveRequest.as_view(),
+        name="Employee_Add_LeaveRequest",
+    ),
+    path(
+        "leave-request/employee/requests/",
+        Employee_ViewAll_LeaveRequest.as_view(),
+        name="Employee_Add_LeaveRequest",
+    ),
+    path(
+        "leave-request/admin/list/",
+        Admin_View_LeaveRequests.as_view(),
+        name="Admin_View_LeaveRequests",
+    ),
+    path(
+        "leave-request/admin/approve/",
+        Admin_Approve_LeaveRequest.as_view(),
+        name="Admin_Approve_LeaveRequest",
     ),
 ]

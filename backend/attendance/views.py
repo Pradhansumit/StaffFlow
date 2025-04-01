@@ -1,9 +1,13 @@
 from tabnanny import check
+from xml.etree.ElementPath import prepare_self
 
+from accounts.models import CustomUser
 from accounts.permission import Admin_Permission, Employee_Permission
 from attendance.models import Attendance
-from attendance.serializer import AttendanceSerializer
+from attendance.serializer import AttendanceReportSerializer, AttendanceSerializer
 from django.contrib.auth import get_user_model
+from django.core import serializers
+from django.db.models import CharField, OuterRef, Subquery, Value
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.response import Response
@@ -85,9 +89,35 @@ class Employee_ChecksOut_Attendance(APIView):
 class Admin_View_TodaysAttendance(APIView):
     permission_classes = [Admin_Permission]
 
-    def get(self, request) -> Response:
+    def post(self, request) -> Response:
         try:
+            selected_date = request.data.get("date", timezone.now().date())
 
-            return Response()
+            # Subqueries to get attendance details for each user
+            attendance_subquery = Attendance.objects.filter(
+                user=OuterRef("pk"), check_in__date=selected_date
+            ).values("id")[
+                :1
+            ]  # Check if attendance exists
+
+            checkin_subquery = Attendance.objects.filter(
+                user=OuterRef("pk"), check_in__date=selected_date
+            ).values("check_in")[:1]
+
+            checkout_subquery = Attendance.objects.filter(
+                user=OuterRef("pk"), check_in__date=selected_date
+            ).values("check_out")[:1]
+
+            # Fetch all users and annotate their attendance data
+            users = CustomUser.objects.annotate(
+                has_attendance=Subquery(
+                    attendance_subquery
+                ),  # Check if attendance exists
+                check_in=Subquery(checkin_subquery),
+                check_out=Subquery(checkout_subquery),
+            )
+            serializer = AttendanceReportSerializer(users, many=True)
+            return Response(serializer.data)
+
         except Exception as e:
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)

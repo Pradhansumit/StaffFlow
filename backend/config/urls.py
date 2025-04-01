@@ -8,6 +8,7 @@ urlpatterns = [
     path("auth/", include("accounts.urls")),
     path("attendance/", include("attendance.urls")),
     path("leave/", include("leave.urls")),
+    path("holiday/", include("holiday.urls")),
 ]
 
 if settings.DEBUG:

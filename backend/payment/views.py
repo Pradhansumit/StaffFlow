@@ -1,4 +1,3 @@
-import decimal
 import traceback
 import uuid
 from datetime import datetime, time
@@ -11,7 +10,7 @@ from attendance.models import Attendance
 from django.db.models import Sum
 from django.utils import timezone
 from holiday.models import Holiday
-from leave.models import LeaveRequest, LeaveType
+from leave.models import LeaveRequest
 from payment.models import BasicSalary, MonthlySalary
 from rest_framework import status
 from rest_framework.response import Response
@@ -176,11 +175,9 @@ class Admin_Calculate_Employee_Monthly_Salary(APIView):
             for x in leave_payment_details:
                 total_unpaid_leaves_days_for_this_month += x["unpaid_current"]
 
-            # TODO: Calculate now the total salary for a user.
-
             basic_salary = BasicSalary.objects.get(user=user).amount
-            # total deduction for the unpaid leaves
 
+            # total deduction for the unpaid leaves
             deduction = Decimal(
                 (basic_salary / 30) * total_unpaid_leaves_days_for_this_month
             )
@@ -197,6 +194,24 @@ class Admin_Calculate_Employee_Monthly_Salary(APIView):
             model.save()
 
             return Response(month_salary)
+        except Exception as e:
+            print(traceback.format_exc())
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+
+class Admin_View_AllEmployee_Monthly_Salary(APIView):
+    permission_classes = [Admin_Permission]
+
+    def post(self, request) -> Response:
+        try:
+            now = timezone.now()
+            first_day_of_month = timezone.make_aware(
+                datetime(year=now.year, month=now.month, day=1)
+            )
+            for_month = request.data.get("for_month") or first_day_of_month
+
+            monthly_salaries = MonthlySalary.objects.filter(for_month=str(for_month))
+            return Response(monthly_salaries.values())
         except Exception as e:
             print(traceback.format_exc())
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)

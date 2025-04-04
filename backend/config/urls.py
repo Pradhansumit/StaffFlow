@@ -9,6 +9,7 @@ urlpatterns = [
     path("attendance/", include("attendance.urls")),
     path("leave/", include("leave.urls")),
     path("holiday/", include("holiday.urls")),
+    path("payment/", include("payment.urls")),
 ]
 
 if settings.DEBUG:

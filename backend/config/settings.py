@@ -39,6 +39,7 @@ CUSTOM_APPS = [
     "attendance",
     "leave",
     "holiday",
+    "payment",
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + CUSTOM_APPS

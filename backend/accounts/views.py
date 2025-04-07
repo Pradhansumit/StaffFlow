@@ -1,3 +1,5 @@
+from accounts.permission import Admin_Permission
+from accounts.serializer import EmployeeSerializer
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
@@ -6,9 +8,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from utils.profile_creation import generate_profile_image
-
-from accounts.permission import Admin_Permission
-from accounts.serializer import EmployeeSerializer
 
 User = get_user_model()
 
@@ -72,7 +71,7 @@ class List_Users(APIView):
     List of all the users.
     """
 
-    permission_classes = [Admin_Permission]
+    permission_classes = [AllowAny]
 
     def post(self, request) -> Response:
         try:

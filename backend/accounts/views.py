@@ -1,13 +1,17 @@
+import traceback
+
 from accounts.permission import Admin_Permission
-from accounts.serializer import EmployeeSerializer
+from accounts.serializer import EmployeeSerializer, MyTokenObtainPairSerializer
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_simplejwt.tokens import RefreshToken
 from utils.profile_creation import generate_profile_image
+
+# from rest_framework_simplejwt.tokens import RefreshToken
+
 
 User = get_user_model()
 
@@ -30,7 +34,7 @@ class Login(APIView):
             user = authenticate(username=username, password=password)
 
             if user is not None:
-                refresh_token = RefreshToken.for_user(user=user)
+                refresh_token = MyTokenObtainPairSerializer.get_token(user=user)
                 return Response(
                     {
                         "refreshtoken": str(refresh_token),
@@ -44,6 +48,7 @@ class Login(APIView):
             )
 
         except Exception as ex:
+            print(traceback.format_exc())
             return Response(str(ex), status.HTTP_400_BAD_REQUEST)
 
 

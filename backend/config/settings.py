@@ -159,4 +159,5 @@ SIMPLE_JWT = {
     "ALGORITHM": os.getenv("JWT_SIGNING_KEY"),
     "SIGNING_KEY": os.getenv("SECRET_KEY"),
     "AUTH_HEADER_TYPES": ("Bearer",),
+    "TOKEN_OBTAIN_SERIALIZER": "accounts.serializers.MyTokenObtainPairSerializer",
 }

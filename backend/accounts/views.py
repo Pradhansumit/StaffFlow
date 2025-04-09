@@ -82,27 +82,24 @@ class List_Users(APIView):
     def post(self, request) -> Response:
         try:
             _user_type = request.data["user"]
-            print(_user_type)
-            if _user_type == "0":
-                users = User.objects.filter(role=0).values(
+            if _user_type == 0 or _user_type == 1:
+                users = User.objects.filter(role=_user_type).values(
                     "id",
                     "username",
                     "first_name",
                     "last_name",
                     "email",
-                    "date_joined",
-                    "role",
-                )
-            elif _user_type == "1":
-                users = User.objects.filter(role=1).values(
-                    "id",
-                    "username",
-                    "first_name",
-                    "last_name",
+                    "designation",
+                    "department",
+                    "mobile",
                     "email",
+                    "gender",
                     "date_joined",
+                    "address",
                     "role",
+                    "profile_pic",
                 )
+
             else:
                 users = User.objects.all().values(
                     "id",

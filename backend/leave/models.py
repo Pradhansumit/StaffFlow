@@ -45,7 +45,7 @@ class LeaveRequest(models.Model):
         pending = 1
         rejected = 2
 
-    employee = models.ForeignKey("accounts.Employee", on_delete=models.CASCADE)
+    user = models.ForeignKey("accounts.CustomUser", on_delete=models.CASCADE)
     leave_type = models.ForeignKey("leave.LeaveType", on_delete=models.PROTECT)
     duration = models.IntegerField(null=False, blank=False)
     unit = models.IntegerField(

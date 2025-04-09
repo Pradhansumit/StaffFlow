@@ -8,6 +8,7 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 from utils.profile_creation import generate_profile_image
 
 # from rest_framework_simplejwt.tokens import RefreshToken
@@ -156,23 +157,16 @@ class Admin_Add_Employee(APIView):
         try:
             mutable_data = request.data.copy()
 
-            _user = User.objects.create(
-                username=mutable_data["email"],
-                password=make_password(
-                    mutable_data["first_name"][0] + mutable_data["last_name"][0]
-                ),
-                role=0,  # Employee
-                email=mutable_data["email"],
-                first_name=mutable_data["first_name"],
-                last_name=mutable_data["last_name"],
+            mutable_data["username"] = mutable_data["email"]
+            password = make_password(
+                mutable_data["first_name"][0] + mutable_data["last_name"][0]
             )
+            mutable_data["password"] = password
 
             if not mutable_data.get("profile_pic"):
-                print("hello")
                 mutable_data["profile_pic"] = generate_profile_image(
                     mutable_data["first_name"], mutable_data["last_name"]
                 )
-            mutable_data["user"] = _user.id
 
             serializer = EmployeeSerializer(data=mutable_data)
             if serializer.is_valid():

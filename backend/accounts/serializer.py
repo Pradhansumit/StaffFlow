@@ -1,11 +1,11 @@
-from accounts.models import Employee
+from accounts.models import CustomUser
 from rest_framework.serializers import ModelSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class EmployeeSerializer(ModelSerializer):
     class Meta:
-        model = Employee
+        model = CustomUser
         fields = "__all__"
 
 

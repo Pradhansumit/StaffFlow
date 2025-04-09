@@ -1,19 +1,25 @@
-export default function Dashboard() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <StatCard label="Users" value="1320" />
-      <StatCard label="Sales" value="$9,430" />
-      <StatCard label="Orders" value="214" />
-      <StatCard label="Revenue" value="$12,304" />
-    </div>
-  );
-}
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import AdminDashboard from "../components/AdminDashboard";
+import EmployeeDashboard from "../components/EmployeeDashboard";
 
-function StatCard({ label, value }) {
-  return (
-    <div className="bg-white shadow-md rounded-lg p-6">
-      <h4 className="text-gray-600">{label}</h4>
-      <p className="text-2xl font-bold">{value}</p>
-    </div>
-  );
+export default function Dashboard() {
+  const [role, setRole] = useState(null);
+
+  useEffect(() => {
+    const access_token = localStorage.getItem("access_token");
+    try {
+      const decoded = jwtDecode(access_token);
+      console.log("From useEffect", decoded.role);
+      setRole(decoded.role);
+    } catch (error) {
+      console.error("Error decoding token:", error);
+    }
+  }, []);
+
+  if (role === null) {
+    return <span className="loading loading-spinner loading-xl"></span>;
+  }
+
+  return role === 0 ? <EmployeeDashboard /> : <AdminDashboard />;
 }

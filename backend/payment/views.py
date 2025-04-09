@@ -4,7 +4,7 @@ from datetime import datetime, time
 from decimal import Decimal
 
 import pandas
-from accounts.models import CustomUser, Employee
+from accounts.models import CustomUser
 from accounts.permission import Admin_Permission
 from attendance.models import Attendance
 from django.db.models import Sum
@@ -38,7 +38,7 @@ class Admin_Calculate_Employee_Monthly_Salary(APIView):
             _first_day = request.data.get("first_day")
             _last_day = request.data.get("last_day")
             user = CustomUser.objects.get(id=uuid.UUID(request.data.get("user")))
-            employee = Employee.objects.get(user=user)
+            # employee = Employee.objects.get(user=user)
 
             first_day = timezone.make_aware(
                 datetime.strptime(f"{_first_day}", "%Y-%m-%d")
@@ -80,7 +80,7 @@ class Admin_Calculate_Employee_Monthly_Salary(APIView):
                     holidays_in_workingdays.append(h)
 
             leaves_this_month = LeaveRequest.objects.filter(
-                employee=employee.id,
+                user=user,
                 approved_time__isnull=False,
                 from_date__range=(first_day, last_day),
             ).values(
@@ -128,7 +128,7 @@ class Admin_Calculate_Employee_Monthly_Salary(APIView):
             for leave_name in types_of_leaves_taken_this_month:
                 overall_usage = (
                     LeaveRequest.objects.filter(
-                        employee=employee.id,
+                        user=user,
                         approved_time__isnull=False,
                         leave_type__name=leave_name,
                         from_date__range=(from_datetime, to_datetime),

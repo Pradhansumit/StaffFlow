@@ -3,11 +3,15 @@ import api from "@/config/api";
 import URLS from "@/utils/urls";
 import loginpic from "../assets/login.svg";
 import { useNavigate } from "react-router";
+import { useAuth } from "../contexts/AuthContext.jsx";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [remember, setRemember] = useState(false);
+
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -16,10 +20,20 @@ export default function LoginPage() {
     try {
       const username = email;
       const res = await api.post(URLS.authLogin, { username, password });
-      localStorage.setItem("access_token", res.data.accesstoken);
-      localStorage.setItem("refresh_token", res.data.refreshtoken);
-      // Optionally redirect the user after successful login
-      console.log("Login successful");
+
+      const token = res.data.accesstoken;
+      const rtoken = res.data.refreshtoken;
+
+      if (remember) {
+        localStorage.setItem("access_token", res.data.accesstoken);
+        localStorage.setItem("refresh_token", res.data.refreshtoken);
+      } else {
+        sessionStorage.setItem("access_token", res.data.accesstoken);
+        sessionStorage.setItem("refresh_token", res.data.refreshtoken);
+      }
+
+      login(token, rtoken);
+
       navigate("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
@@ -34,6 +48,7 @@ export default function LoginPage() {
     }
   };
 
+  console.log(remember);
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row w-full max-w-screen-xl shadow-2xl rounded-lg overflow-hidden bg-base-100">
@@ -95,7 +110,13 @@ export default function LoginPage() {
 
             <div className="form-control">
               <label className="cursor-pointer label">
-                <input type="checkbox" className="checkbox" />
+                <input
+                  type="checkbox"
+                  className="checkbox"
+                  onClick={() => {
+                    setRemember(!remember);
+                  }}
+                />
                 <span className="label-text ml-2">Remember me</span>
               </label>
             </div>

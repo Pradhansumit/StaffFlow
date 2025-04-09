@@ -1,4 +1,3 @@
-from accounts.models import Employee
 from accounts.permission import Admin_Permission, Employee_Permission
 from attendance.views import USER
 from django.utils import timezone
@@ -134,12 +133,12 @@ class Employee_Add_LeaveRequest(APIView):
         try:
             _data = request.data.copy()
 
-            user = USER.objects.filter(username=request.user).first()
-            employee = Employee.objects.filter(user=user.id).first()
-            _data["employee"] = employee.id
+            # user = USER.objects.filter(username=request.user).first()
+            # employee = Employee.objects.filter(user=user.id).first()
+            # _data["employee"] = employee.id
 
-            leave_type = LeaveType.objects.filter(id=_data["leave_type"]).first()
-            _data["leave_type"] = leave_type.id
+            # leave_type = LeaveType.objects.filter(id=_data["leave_type"]).first()
+            # _data["leave_type"] = leave_type.id
 
             serializer = LeaveRequestSerializer(data=_data)
             if serializer.is_valid():
@@ -159,10 +158,10 @@ class Employee_ViewAll_LeaveRequest(APIView):
 
     def get(self, request) -> Response:
         try:
-            user = USER.objects.filter(username=request.user).first()
-            employee = Employee.objects.filter(user=user.id).first()
+            # user = USER.objects.filter(username=request.user).first()
+            # employee = Employee.objects.filter(user=user.id).first()
 
-            leave_requests = LeaveRequest.objects.filter(employee=employee.id)
+            leave_requests = LeaveRequest.objects.filter(user=request.user)
             serializer = LeaveRequestSerializer(leave_requests, many=True)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -217,6 +216,11 @@ class Admin_Approve_LeaveRequest(APIView):
                     return Response(status=status.HTTP_200_OK)
                 elif _status == 1:
                     leave.status = 1
+                    leave.approved_time = timezone.now()
+                    leave.save()
+                    return Response(status=status.HTTP_200_OK)
+                elif _status == 2:
+                    leave.status = 2
                     leave.approved_time = timezone.now()
                     leave.save()
                     return Response(status=status.HTTP_200_OK)

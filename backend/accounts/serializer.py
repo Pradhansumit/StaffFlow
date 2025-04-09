@@ -14,5 +14,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
         token["role"] = user.role
+        token["first_name"] = user.first_name
+        token["last_name"] = user.last_name
+        token["designation"] = user.designation
+        token["department"] = user.department
+        token["email"] = user.email
+        token["profile_pic"] = user.profile_pic.url
 
         return token

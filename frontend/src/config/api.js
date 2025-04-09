@@ -30,10 +30,13 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const refreshToken = localStorage.getItem("refresh_token");
+        let refreshToken = localStorage.getItem("refresh_token");
+        if (!refreshToken) {
+          refreshToken = sessionStorage.getItem("refresh_token");
+        }
 
         const res = await axios.post(
-          `${import.meta.env.VITE_API_URL}/auth/refresh`,
+          `${import.meta.env.VITE_API_URL}/auth/refresh/`,
           { refresh_token: refreshToken },
         );
 

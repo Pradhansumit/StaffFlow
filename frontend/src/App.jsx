@@ -8,8 +8,8 @@ import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <Routes>
           <Route path="/login" element={<LoginPage />}></Route>
           <Route
@@ -39,8 +39,8 @@ function App() {
             {/* <Route path="attendance" element={<Attendance />} /> */}
           </Route>
         </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

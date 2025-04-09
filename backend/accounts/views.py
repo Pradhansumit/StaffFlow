@@ -159,8 +159,10 @@ class Admin_Add_Employee(APIView):
 
             mutable_data["username"] = mutable_data["email"]
             password = make_password(
-                mutable_data["first_name"][0] + mutable_data["last_name"][0]
+                mutable_data["first_name"][0].upper()
+                + mutable_data["last_name"][0].upper()
             )
+            mutable_data["is_active"] = True
             mutable_data["password"] = password
 
             if not mutable_data.get("profile_pic"):

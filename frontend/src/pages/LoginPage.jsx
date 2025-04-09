@@ -24,15 +24,7 @@ export default function LoginPage() {
       const token = res.data.accesstoken;
       const rtoken = res.data.refreshtoken;
 
-      if (remember) {
-        localStorage.setItem("access_token", res.data.accesstoken);
-        localStorage.setItem("refresh_token", res.data.refreshtoken);
-      } else {
-        sessionStorage.setItem("access_token", res.data.accesstoken);
-        sessionStorage.setItem("refresh_token", res.data.refreshtoken);
-      }
-
-      login(token, rtoken);
+      login(token, rtoken, remember);
 
       navigate("/dashboard");
     } catch (error) {
@@ -48,7 +40,6 @@ export default function LoginPage() {
     }
   };
 
-  console.log(remember);
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row w-full max-w-screen-xl shadow-2xl rounded-lg overflow-hidden bg-base-100">

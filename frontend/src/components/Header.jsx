@@ -1,12 +1,17 @@
-export default function Header() {
-  const handleLogout = () => {
-    localStorage.clear(); // or just remove tokens
-    window.location.href = "/login"; // or use react-router's navigate
-  };
+import { useNavigate } from "react-router";
+import { useAuth } from "../contexts/AuthContext";
 
+export default function Header() {
+  const { logout, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
   return (
     <header className="bg-white shadow p-4 flex justify-between items-center">
-      <h2 className="text-xl font-semibold">Welcome, Admin</h2>
+      <h2 className="text-xl font-semibold">Welcome, {user.name}</h2>
 
       {/* Avatar Dropdown */}
       <div className="dropdown dropdown-end">
@@ -18,7 +23,7 @@ export default function Header() {
           <div className="w-12 rounded-full">
             <img
               alt="Profile"
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+              src={`${import.meta.env.VITE_API_URL}${user.profile_pic}`}
             />
           </div>
         </div>

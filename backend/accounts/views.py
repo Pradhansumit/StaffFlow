@@ -170,7 +170,7 @@ class Admin_Add_Employee(APIView):
             serializer = EmployeeSerializer(data=mutable_data)
             if serializer.is_valid():
                 serializer.save()
-                return Response(status=status.HTTP_200_OK)
+                return Response(status=status.HTTP_201_CREATED)
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

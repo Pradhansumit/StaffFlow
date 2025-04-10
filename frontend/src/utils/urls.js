@@ -5,5 +5,6 @@ const URLS = {
   authLogout: "auth/ll/",
   authRefresh: "auth/refresh/",
   listUsers: "auth/user/all",
+  addEmployee: "auth/employee/add",
 };
 export default URLS;

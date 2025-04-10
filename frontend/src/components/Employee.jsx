@@ -1,23 +1,57 @@
 import { useEffect, useState } from "react";
 import api from "../config/api";
 import URLS from "../utils/urls";
-import { FcPhone } from "react-icons/fc";
+import { FaPlus } from "react-icons/fa6";
+import { MdFileDownload } from "react-icons/md";
+import { FaSearch } from "react-icons/fa";
+import TableRow from "../components/TableRow.jsx";
+import AddEmployeeModal from "../components/AddEmployeeModal.jsx";
 
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
+  const [search, setSearch] = useState("");
+
+  async function getEmployee() {
+    const res = await api.post(URLS.listUsers, { user: 0 });
+    setEmployees(res.data);
+  }
 
   useEffect(() => {
-    async function getEmployee() {
-      const res = await api.post(URLS.listUsers, { user: 0 });
-      console.log(res);
-      setEmployees(res.data);
-    }
-
     getEmployee();
   }, []);
 
   return (
     <div className="overflow-x-auto">
+      <div className="flex items-center justify-between bg-blue-50 p-3 mb-3 rounded-xl shadow">
+        <div className="flex items-center gap-3">
+          <p className="text-lg font-semibold">Employees</p>
+          <label className="input">
+            <FaSearch className="text-lg" color="gray" />
+            <input
+              type="search"
+              className="grow"
+              placeholder="Search"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </label>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            className="btn btn-sm btn-circle btn-success text-white"
+            title="Add"
+            onClick={() => document.getElementById("my_modal_5").showModal()}
+          >
+            <FaPlus className="text-2xl" />
+          </button>
+          <AddEmployeeModal getEmployee={getEmployee} />
+          <button
+            className="btn btn-sm btn-circle btn-secondary text-blue-500"
+            title="Download"
+          >
+            <MdFileDownload className="text-2xl" color="white" />
+          </button>
+        </div>
+      </div>
       <table className="table bg-white">
         {/* head */}
         <thead>
@@ -37,50 +71,16 @@ export default function Employees() {
           </tr>
         </thead>
         <tbody>
-          {employees.map((employee) => (
-            <tr key={employee.id}>
-              <th>
-                {console.log(employee)}
-                <label>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </th>
-              <td>
-                <div className="flex items-center gap-3">
-                  <div className="avatar">
-                    <div className="mask mask-squircle h-12 w-12">
-                      <img
-                        src={`${import.meta.env.VITE_API_URL}/media/${
-                          employee.profile_pic
-                        }`}
-                        alt="Avatar Tailwind CSS Component"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="font-bold">
-                      {employee.first_name + " " + employee.last_name}
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td>{employee.designation}</td>
-              <td>{employee.department}</td>
-              <td>
-                <div className="flex justify-start items-center">
-                  <FcPhone className="text-xl" />
-                  {employee.mobile}
-                </div>
-              </td>
-              <td>{employee.email}</td>
-              <td>
-                <div className="badge badge-primary">
-                  {employee.gender === 1 ? "Female" : "Male"}
-                </div>
-              </td>
-              <td>{employee.address}</td>
-            </tr>
-          ))}
+          {employees
+            .filter(
+              (employee) =>
+                employee.first_name.toLowerCase().includes(search) ||
+                employee.last_name.toLowerCase().includes(search) ||
+                employee.email.toLowerCase().includes(search),
+            )
+            .map((employee) => (
+              <TableRow employee={employee} key={employee.id} />
+            ))}
         </tbody>
       </table>
     </div>

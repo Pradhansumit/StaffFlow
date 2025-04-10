@@ -37,7 +37,11 @@ function TableRow({ employee }) {
       </td>
       <td>{employee.email}</td>
       <td>
-        <div className="badge badge-primary">
+        <div
+          className={`badge ${
+            employee.gender === 1 ? "badge-primary" : "badge-secondary"
+          }`}
+        >
           {employee.gender === 1 ? "Female" : "Male"}
         </div>
       </td>

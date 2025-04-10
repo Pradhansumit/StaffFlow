@@ -6,6 +6,7 @@ import { MdFileDownload } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
 import TableRow from "../components/TableRow.jsx";
 import AddEmployeeModal from "../components/AddEmployeeModal.jsx";
+import exportToCSV from "../utils/exportToCSV.js";
 
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
@@ -47,6 +48,7 @@ export default function Employees() {
           <button
             className="btn btn-sm btn-circle btn-secondary text-blue-500"
             title="Download"
+            onClick={() => exportToCSV(employees)}
           >
             <MdFileDownload className="text-2xl" color="white" />
           </button>

@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Employees from "./components/Employee";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./contexts/AuthContext";
+import AdminAttendance from "./components/AdminAttendance";
 
 function App() {
   return (
@@ -36,7 +37,14 @@ function App() {
                 </PrivateRoute>
               }
             />
-            {/* <Route path="attendance" element={<Attendance />} /> */}
+            <Route
+              path="attendance"
+              element={
+                <PrivateRoute>
+                  <AdminAttendance />
+                </PrivateRoute>
+              }
+            />
           </Route>
         </Routes>
       </AuthProvider>

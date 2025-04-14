@@ -36,15 +36,16 @@ api.interceptors.response.use(
         }
 
         const res = await axios.post(
-          `${import.meta.env.VITE_API_URL}/auth/refresh/`,
-          { refresh_token: refreshToken },
+          `${import.meta.env.VITE_API_URL}auth/refresh/`,
+          { refresh: refreshToken },
         );
 
-        const newAccessToken = res.data.access_token;
+        const newAccessToken = res.data.access;
 
-        // Save new access token
-        localStorage.setItem("access_token", newAccessToken);
-
+        if (localStorage.getItem("refresh_token"))
+          localStorage.setItem("access_token", newAccessToken);
+        else if (sessionStorage.getItem("refresh_token"))
+          sessionStorage.setItem("access_token", newAccessToken);
         // Update Authorization header & retry original request
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return api(originalRequest);

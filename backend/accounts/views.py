@@ -98,6 +98,7 @@ class List_Users(APIView):
                     "address",
                     "role",
                     "profile_pic",
+                    "education",
                 )
 
             else:
@@ -196,5 +197,37 @@ class Admin_Delete_User(APIView):
                 return Response(
                     {"error": "User not found."}, status=status.HTTP_404_NOT_FOUND
                 )
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class Admin_Update_User(APIView):
+    """
+    Update user for both admin and employee.
+    """
+
+    permission_classes = [Admin_Permission]
+
+    def post(self, request) -> Response:
+        try:
+            id = request.data.get("id", None)
+            if id is None:
+                return Response(
+                    {"error": "Id is required."}, status=status.HTTP_400_BAD_REQUEST
+                )
+            try:
+                user = User.objects.get(id=id)
+            except User.DoesNotExist:
+                return Response(
+                    {"error": "User not found."},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+
+            serializer = EmployeeSerializer(user, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

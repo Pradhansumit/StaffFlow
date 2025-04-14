@@ -154,7 +154,7 @@ MEDIA_ROOT = BASE_DIR / "uploads"
 
 # JWT_SETTINGS
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ALGORITHM": os.getenv("JWT_SIGNING_KEY"),
     "SIGNING_KEY": os.getenv("SECRET_KEY"),

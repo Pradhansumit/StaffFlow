@@ -59,6 +59,17 @@ export default function Employees() {
   return (
     <>
       <div className="overflow-x-auto">
+        <div className="breadcrumbs text-sm">
+          <ul>
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="/employee">Employees</a>
+            </li>
+          </ul>
+        </div>
+
         <div className="flex items-center justify-between bg-blue-50 p-3 mb-3 rounded-xl shadow">
           <div className="flex items-center gap-3">
             <p className="text-lg font-semibold">Employees</p>

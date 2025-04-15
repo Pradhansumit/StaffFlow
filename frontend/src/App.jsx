@@ -6,6 +6,7 @@ import Employees from "./components/Employee";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 import AdminAttendance from "./components/AdminAttendance";
+import AdminAttendanceToday from "./components/AdminAttendanceToday";
 
 function App() {
   return (
@@ -38,10 +39,18 @@ function App() {
               }
             />
             <Route
-              path="attendance"
+              path="attendance-sheet"
               element={
                 <PrivateRoute>
                   <AdminAttendance />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="attendance-today"
+              element={
+                <PrivateRoute>
+                  <AdminAttendanceToday />
                 </PrivateRoute>
               }
             />

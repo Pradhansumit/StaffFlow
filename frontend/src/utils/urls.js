@@ -8,5 +8,8 @@ const URLS = {
   addEmployee: "auth/employee/add",
   deleteEmployee: "auth/user/delete",
   updateUser: "auth/user/update",
+
+  // for attendance
+  todayAttendance: "attendance/admin/view-today-report/",
 };
 export default URLS;

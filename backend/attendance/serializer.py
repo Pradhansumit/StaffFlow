@@ -18,6 +18,7 @@ class AttendanceReportSerializer(serializers.Serializer):
     attendance_status = serializers.SerializerMethodField()
     check_in = serializers.SerializerMethodField()
     check_out = serializers.SerializerMethodField()
+    profile_pic = serializers.ImageField()
 
     def get_attendance_status(self, obj):
         return "Present" if obj.has_attendance else "Absent"

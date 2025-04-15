@@ -11,7 +11,16 @@ import {
 export const SIDEBAR_LINKS = {
   admin: [
     { label: "Employees", to: "/employees", icon: FaUsers },
-    { label: "Attendance", to: "/attendance", icon: FaCalendarCheck },
+    {
+      label: "Attendance Sheet",
+      to: "/attendance-sheet",
+      icon: FaCalendarCheck,
+    },
+    {
+      label: "Attendance Today",
+      to: "/attendance-today",
+      icon: FaCalendarCheck,
+    },
     { label: "Payroll", to: "/payroll", icon: FaMoneyBill },
     { label: "Admin Panel", to: "/admin-panel", icon: FaTools },
   ],

@@ -4,6 +4,7 @@ import { MdFileDownload } from "react-icons/md";
 import exportToCSV from "../utils/exportToCSV";
 import api from "../config/api";
 import URLS from "../utils/urls";
+import extractTimeFromDateTimeString from "../utils/extractTimeFromDateTimeString";
 
 function AdminAttendanceToday() {
   const [search, setSearch] = useState("");
@@ -59,7 +60,7 @@ function AdminAttendanceToday() {
             <button
               className="btn btn-sm btn-circle btn-secondary text-blue-500"
               title="Download"
-              onClick={() => exportToCSV()}
+              onClick={() => exportToCSV(apiData)}
             >
               <MdFileDownload className="text-2xl" color="white" />
             </button>
@@ -80,6 +81,7 @@ function AdminAttendanceToday() {
               <th>Check Out</th>
               <th>Email</th>
               <th>Status</th>
+              <th>Total Hours</th>
             </tr>
           </thead>
           <tbody>
@@ -108,8 +110,10 @@ function AdminAttendanceToday() {
                     </div>
                   </td>
                   <td>{data.first_name + " " + data.last_name}</td>
-                  <td>{data.check_in ?? "-"}</td>
-                  <td>{data.check_out ?? "-"}</td>
+                  <td>{extractTimeFromDateTimeString(data.check_in) ?? "-"}</td>
+                  <td>
+                    {extractTimeFromDateTimeString(data.check_out) ?? "-"}
+                  </td>
                   <td>{data.email}</td>
                   <td
                     className={`badge badge-soft my-3 ${
@@ -119,6 +123,15 @@ function AdminAttendanceToday() {
                     }`}
                   >
                     {data.attendance_status}
+                  </td>
+                  <td>
+                    {data.check_in
+                      ? Math.trunc(
+                          (new Date(data.check_out) - new Date(data.check_in)) /
+                            1000 /
+                            3600,
+                        )
+                      : "-"}
                   </td>
                 </tr>
               ))}

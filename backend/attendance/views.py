@@ -1,3 +1,4 @@
+import traceback
 from tabnanny import check
 from xml.etree.ElementPath import prepare_self
 
@@ -21,7 +22,7 @@ class Employee_ChecksIn_Attendance(APIView):
 
     def post(self, request) -> Response:
         try:
-            user = USER.objects.get(username=request.user)
+            user = USER.objects.get(username=request.user.username)
 
             # In case if an employee forgets to checkout and trying to check in.
             attendance = Attendance.objects.filter(user=user.id, check_out__isnull=True)
@@ -60,6 +61,7 @@ class Employee_ChecksIn_Attendance(APIView):
             )
 
         except Exception as e:
+            print(traceback.print_exc())
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -68,7 +70,7 @@ class Employee_ChecksOut_Attendance(APIView):
 
     def post(self, request) -> Response:
         try:
-            user = USER.objects.get(username=request.user)
+            user = USER.objects.get(username=request.user.username)
             attendance = Attendance.objects.filter(
                 user=user.id, check_out__isnull=True
             ).first()

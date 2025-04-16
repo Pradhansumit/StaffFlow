@@ -1,4 +1,5 @@
 from attendance.views import (
+    Admin_View_MonthsAttendance,
     Admin_View_TodaysAttendance,
     Employee_ChecksIn_Attendance,
     Employee_ChecksOut_Attendance,
@@ -20,5 +21,10 @@ urlpatterns = [
         "admin/view-today-report/",
         Admin_View_TodaysAttendance.as_view(),
         name="Admin_View_TodaysAttendance",
+    ),
+    path(
+        "admin/view-month-report/",
+        Admin_View_MonthsAttendance.as_view(),
+        name="Admin_View_MonthsAttendance",
     ),
 ]

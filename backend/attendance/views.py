@@ -1,15 +1,15 @@
+import calendar
 import traceback
-from tabnanny import check
-from xml.etree.ElementPath import prepare_self
+from datetime import datetime
 
 from accounts.models import CustomUser
 from accounts.permission import Admin_Permission, Employee_Permission
 from attendance.models import Attendance
 from attendance.serializer import AttendanceReportSerializer, AttendanceSerializer
 from django.contrib.auth import get_user_model
-from django.core import serializers
-from django.db.models import CharField, OuterRef, Subquery, Value
+from django.db.models import OuterRef, Subquery
 from django.utils import timezone
+from holiday.models import Holiday
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -122,4 +122,76 @@ class Admin_View_TodaysAttendance(APIView):
             return Response(serializer.data)
 
         except Exception as e:
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+
+class Admin_View_MonthsAttendance(APIView):
+    from rest_framework.permissions import AllowAny
+
+    permission_classes = [Admin_Permission]
+
+    def post(self, request) -> Response:
+        try:
+            selected_month = request.data.get("month", timezone.now().month)
+            selected_year = request.data.get("year", timezone.now().year)
+
+            _, num_days = calendar.monthrange(selected_year, selected_month)
+
+            all_dates = [
+                datetime(selected_year, selected_month, day).date()
+                for day in range(1, num_days + 1)
+            ]
+
+            holidays = Holiday.objects.filter(
+                date__month=selected_month, date__year=selected_year
+            )
+            holiday_dates = {holiday.date: holiday.name for holiday in holidays}
+
+            data = []
+
+            users = CustomUser.objects.all()
+            for user in users:
+                user_data = {
+                    "id": user.id,
+                    "name": f"{user.first_name} {user.last_name}",
+                    "daily_attendance": [],
+                }
+
+                for date in all_dates:
+                    attendance = Attendance.objects.filter(
+                        user=user, check_in__date=date
+                    ).first()
+
+                    if attendance:
+                        user_data["daily_attendance"].append(
+                            {
+                                "date": date,
+                                "check_in": attendance.check_in,
+                                "check_out": attendance.check_out,
+                                "status": "Present",
+                            }
+                        )
+                    else:
+                        if date in holiday_dates:
+                            status_level = "Holiday"
+                        elif date.weekday() in [5, 6]:
+                            status_level = "Weekend"
+                        else:
+                            status_level = "Absent"
+
+                        user_data["daily_attendance"].append(
+                            {
+                                "date": date,
+                                "check_in": None,
+                                "check_out": None,
+                                "status": status_level,
+                            }
+                        )
+
+                data.append(user_data)
+
+            return Response(data, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            print(traceback.format_exc())
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)

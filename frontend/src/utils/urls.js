@@ -11,5 +11,10 @@ const URLS = {
 
   // for attendance
   todayAttendance: "attendance/admin/view-today-report/",
+
+  // for holidays
+  holidayList: "holiday/view/",
+  holidayDelete: "holiday/delete/",
+  holidayAdd: "holiday/add/",
 };
 export default URLS;

@@ -7,6 +7,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 import AdminAttendance from "./components/AdminAttendance";
 import AdminAttendanceToday from "./components/AdminAttendanceToday";
+import HolidayList from "./components/HolidayList";
 
 function App() {
   return (
@@ -51,6 +52,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <AdminAttendanceToday />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="holiday-list"
+              element={
+                <PrivateRoute>
+                  <HolidayList />
                 </PrivateRoute>
               }
             />

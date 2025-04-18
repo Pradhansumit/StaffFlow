@@ -111,7 +111,7 @@ function AdminAttendance() {
             Search
           </button>
         </div>
-        <div>
+        <div className="container overflow-x-auto">
           <table className="table">
             <thead>
               <tr>
@@ -125,7 +125,7 @@ function AdminAttendance() {
             <tbody>
               {data.map((data) => (
                 <tr key={data.id}>
-                  <td>{data.name}</td>
+                  <td className="font-semibold">{data.name}</td>
                   {data.daily_attendance.map((att) => (
                     <td>
                       {att.status.toLowerCase() === "present" ? (

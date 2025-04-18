@@ -109,7 +109,9 @@ function AdminAttendanceToday() {
                       />
                     </div>
                   </td>
-                  <td>{data.first_name + " " + data.last_name}</td>
+                  <td className="font-semibold">
+                    {data.first_name + " " + data.last_name}
+                  </td>
                   <td>{extractTimeFromDateTimeString(data.check_in) ?? "-"}</td>
                   <td>
                     {extractTimeFromDateTimeString(data.check_out) ?? "-"}

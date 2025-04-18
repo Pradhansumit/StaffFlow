@@ -7,6 +7,7 @@ import {
   FaFileInvoiceDollar,
   FaEnvelopeOpenText,
   FaCalendarAlt,
+  FaPlane,
 } from "react-icons/fa";
 
 export const SIDEBAR_LINKS = {
@@ -22,6 +23,7 @@ export const SIDEBAR_LINKS = {
       to: "/attendance-today",
       icon: FaCalendarCheck,
     },
+    { label: "Holiday List", to: "/holiday-list", icon: FaPlane },
     { label: "Payroll", to: "/payroll", icon: FaMoneyBill },
     { label: "Admin Panel", to: "/admin-panel", icon: FaTools },
   ],

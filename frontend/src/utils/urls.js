@@ -16,5 +16,6 @@ const URLS = {
   holidayList: "holiday/view/",
   holidayDelete: "holiday/delete/",
   holidayAdd: "holiday/add/",
+  holidayUpdate: "holiday/update/",
 };
 export default URLS;

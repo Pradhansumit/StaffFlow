@@ -4,6 +4,8 @@ import { MdFileDownload } from "react-icons/md";
 import api from "../config/api";
 import URLS from "../utils/urls";
 import AddHolidayModal from "./AddHolidayModal";
+import exportToCSV from "../utils/exportToCSV";
+import EditHolidayModal from "./EditHolidayModal";
 
 const formatDate = (date) => {
   let dt = new Date(date);
@@ -16,12 +18,12 @@ function HolidayList() {
   const [holidays, setHolidays] = useState([]);
   const [toast, setToast] = useState("");
   const [loading, setLoading] = useState(true);
+  const [editData, setEditData] = useState([]);
 
   const getHolidays = async () => {
     try {
       const res = await api.get(URLS.holidayList, {});
       if (res.status === 200) {
-        console.log(res.data);
         setHolidays(res.data);
       }
     } catch (error) {
@@ -101,7 +103,7 @@ function HolidayList() {
           <button
             className="btn btn-sm btn-circle btn-secondary text-blue-500"
             title="Download"
-            // onClick={() => exportToCSV(employees)}
+            onClick={() => exportToCSV(holidays)}
           >
             <MdFileDownload className="text-2xl" color="white" />
           </button>
@@ -141,7 +143,13 @@ function HolidayList() {
                     color="red"
                     onClick={() => handleDelete(holiday.id)}
                   />
-                  <FaEdit color="green" onClick={() => setToast("Hi")} />
+                  <FaEdit
+                    color="green"
+                    onClick={() => {
+                      document.getElementById("edit_modal").showModal();
+                      setEditData(holiday);
+                    }}
+                  />
                 </td>
               </tr>
             ))}
@@ -156,6 +164,14 @@ function HolidayList() {
           </div>
         </div>
       ) : null}
+
+      {
+        <EditHolidayModal
+          getHolidays={getHolidays}
+          editData={editData}
+          setToast={setToast}
+        />
+      }
     </>
   );
 }

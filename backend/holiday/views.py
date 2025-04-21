@@ -65,7 +65,7 @@ class Admin_Update_Holiday(APIView):
                 )
                 if serializer.is_valid():
                     serializer.save()
-                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                    return Response(serializer.data, status=status.HTTP_200_OK)
                 else:
                     return Response(
                         serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR

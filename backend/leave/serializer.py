@@ -17,6 +17,7 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
 
 
 class LeaveRequestViewSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
     employee = serializers.SerializerMethodField()
     leave_type = serializers.SerializerMethodField(method_name="leave_type_name")
     department = serializers.SerializerMethodField(method_name="get_department")

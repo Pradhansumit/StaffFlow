@@ -20,5 +20,6 @@ const URLS = {
 
   // for leave
   leaveRequestList: "leave/leave-request/admin/list/",
+  leaveRequestApprove: "leave/leave-request/admin/approve/",
 };
 export default URLS;

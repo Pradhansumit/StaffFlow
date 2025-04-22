@@ -4,25 +4,41 @@ import { FaSearch } from "react-icons/fa";
 import { MdFileDownload } from "react-icons/md";
 import api from "../../../config/api";
 import URLS from "../../../utils/urls";
+import LeaveModal from "./LeaveModal";
 
 function LeaveRequests() {
   const [search, setSearch] = useState("");
   const [apiData, setApiData] = useState([]);
+  const [toast, setToast] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchData = async () => {
+    try {
+      const res = await api.get(URLS.leaveRequestList);
+      setApiData(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await api.get(URLS.leaveRequestList);
-        setApiData(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     fetchData();
   }, []);
 
-  return (
+  useEffect(() => {
+    if (toast !== "") {
+      const timer = setTimeout(() => {
+        setToast("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
+
+  return isLoading ? (
+    <span className="loading loading-spinner loading-xl"></span>
+  ) : (
     <>
       {apiData && console.log(apiData)}
       <div className="overflow-x-auto">
@@ -90,8 +106,8 @@ function LeaveRequests() {
                     </label>
                   </th>
                   <td className="font-semibold">{data.employee}</td>
-                  <td>{data.leave_type}</td>
                   <td>{data.department}</td>
+                  <td>{data.leave_type}</td>
                   <td>{new Date(data.from_date).toDateString()}</td>
                   <td>{new Date(data.to_date).toDateString()}</td>
                   <td>{data.duration}</td>
@@ -102,7 +118,7 @@ function LeaveRequests() {
                   </td>
 
                   <td className="flex items-center">
-                    <span
+                    <button
                       className={`badge font-semibold text-white ${
                         data.status === 0
                           ? "badge-success"
@@ -110,35 +126,34 @@ function LeaveRequests() {
                           ? "badge-warning"
                           : "badge-error"
                       }`}
+                      onClick={() => {
+                        document.getElementById("my_modal_1").showModal();
+                      }}
                     >
                       {data.status === 0
                         ? "Approved"
                         : data.status === 1
                         ? "Pending"
                         : "Rejected"}
-                    </span>
+                    </button>
+                    <LeaveModal
+                      leave={data}
+                      fetchData={fetchData}
+                      setToast={setToast}
+                    />
                   </td>
                 </tr>
               ))}
           </tbody>
         </table>
       </div>
-      {/* {toast !== "" ? (
-          <div className="toast toast-top toast-end">
-            <div className="alert alert-success">
-              <span>{toast}</span>
-            </div>
+      {toast !== "" ? (
+        <div className="toast toast-top toast-end">
+          <div className="alert alert-success">
+            <span>{toast}</span>
           </div>
-        ) : null} */}
-
-      {/* {editData && (
-          <EditEmployeeModal
-            editData={editData}
-            onClose={() => setEditData(null)}
-            getEmployee={getEmployee}
-            setToast={setToast}
-          />
-        )} */}
+        </div>
+      ) : null}
     </>
   );
 }

@@ -10,6 +10,8 @@ import {
   FaPlane,
 } from "react-icons/fa";
 
+import { FaCodePullRequest } from "react-icons/fa6";
+
 export const SIDEBAR_LINKS = {
   admin: [
     { label: "Employees", to: "/employees", icon: FaUsers },
@@ -24,6 +26,7 @@ export const SIDEBAR_LINKS = {
       icon: FaCalendarCheck,
     },
     { label: "Holiday List", to: "/holiday-list", icon: FaPlane },
+    { label: "Leave Requests", to: "/leave-requests", icon: FaCodePullRequest },
     { label: "Payroll", to: "/payroll", icon: FaMoneyBill },
     { label: "Admin Panel", to: "/admin-panel", icon: FaTools },
   ],

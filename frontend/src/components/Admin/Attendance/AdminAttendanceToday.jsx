@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdFileDownload } from "react-icons/md";
-import exportToCSV from "../utils/exportToCSV";
-import api from "../config/api";
-import URLS from "../utils/urls";
-import extractTimeFromDateTimeString from "../utils/extractTimeFromDateTimeString";
+import exportToCSV from "../../../utils/exportToCSV";
+import api from "../../../config/api";
+import URLS from "../../../utils/urls";
+import extractTimeFromDateTimeString from "../../../utils/extractTimeFromDateTimeString";
 
 function AdminAttendanceToday() {
   const [search, setSearch] = useState("");

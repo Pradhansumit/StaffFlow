@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FaEdit, FaPlus, FaSearch, FaTrash } from "react-icons/fa";
 import { MdFileDownload } from "react-icons/md";
-import api from "../config/api";
-import URLS from "../utils/urls";
+import api from "../../../config/api";
+import URLS from "../../../utils/urls";
 import AddHolidayModal from "./AddHolidayModal";
-import exportToCSV from "../utils/exportToCSV";
+import exportToCSV from "../../../utils/exportToCSV";
 import EditHolidayModal from "./EditHolidayModal";
 
 const formatDate = (date) => {

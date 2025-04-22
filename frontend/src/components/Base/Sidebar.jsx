@@ -1,7 +1,7 @@
 import { Link } from "react-router";
-import { useAuth } from "../contexts/AuthContext.jsx";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 import { useState } from "react";
-import { SIDEBAR_LINKS } from "../utils/sidebarLinks.js";
+import { SIDEBAR_LINKS } from "../../utils/sidebarLinks.js";
 
 // Icons
 import { FaUsers, FaCalendarCheck, FaMoneyBill, FaBars } from "react-icons/fa";

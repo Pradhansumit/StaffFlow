@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import api from "../config/api";
-import URLS from "../utils/urls";
+import api from "../../../config/api.js";
+import URLS from "../../../utils/urls.js";
 import { FaPlus } from "react-icons/fa6";
 import { MdFileDownload } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
-import TableRow from "../components/TableRow.jsx";
-import AddEmployeeModal from "../components/AddEmployeeModal.jsx";
-import exportToCSV from "../utils/exportToCSV.js";
+import TableRow from "./TableRow.jsx";
+import AddEmployeeModal from "./AddEmployeeModal.jsx";
+import exportToCSV from "../../../utils/exportToCSV.js";
 import EditEmployeeModal from "./EditEmployeeModal.jsx";
 
 export default function Employees() {

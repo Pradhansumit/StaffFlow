@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import AdminDashboard from "../components/AdminDashboard";
-import EmployeeDashboard from "../components/EmployeeDashboard";
+import AdminDashboard from "../components/Admin/Dashboard/AdminDashboard";
+import EmployeeDashboard from "../components/Employee/EmployeeDashboard";
 
 export default function Dashboard() {
   const [role, setRole] = useState(null);

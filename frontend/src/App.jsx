@@ -2,12 +2,13 @@ import LoginPage from "./pages/LoginPage";
 import { BrowserRouter, Routes, Route } from "react-router";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
-import Employees from "./components/Employee";
-import PrivateRoute from "./components/PrivateRoute";
+import Employees from "./components/Admin/Employee/Employee";
+import PrivateRoute from "./components/Base/PrivateRoute";
 import { AuthProvider } from "./contexts/AuthContext";
-import AdminAttendance from "./components/AdminAttendance";
-import AdminAttendanceToday from "./components/AdminAttendanceToday";
-import HolidayList from "./components/HolidayList";
+import AdminAttendance from "./components/Admin/Attendance/AdminAttendance";
+import AdminAttendanceToday from "./components/Admin/Attendance/AdminAttendanceToday";
+import HolidayList from "./components/Admin/Holiday/HolidayList";
+import LeaveRequests from "./components/Admin/Leave/LeaveRequests";
 
 function App() {
   return (
@@ -60,6 +61,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <HolidayList />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="leave-requests"
+              element={
+                <PrivateRoute>
+                  <LeaveRequests />
                 </PrivateRoute>
               }
             />

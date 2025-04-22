@@ -17,5 +17,8 @@ const URLS = {
   holidayDelete: "holiday/delete/",
   holidayAdd: "holiday/add/",
   holidayUpdate: "holiday/update/",
+
+  // for leave
+  leaveRequestList: "leave/leave-request/admin/list/",
 };
 export default URLS;

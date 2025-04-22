@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import api from "../config/api";
-import URLS from "../utils/urls";
+import api from "../../../config/api";
+import URLS from "../../../utils/urls";
 
 export default function EditHolidayModal({ editData, getHolidays, setToast }) {
   const formRef = useRef(null);

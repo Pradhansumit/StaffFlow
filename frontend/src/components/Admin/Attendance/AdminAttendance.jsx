@@ -3,7 +3,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { FaMinusCircle } from "react-icons/fa";
 import { RxCrossCircled } from "react-icons/rx";
-import api from "../config/api";
+import api from "../../../config/api";
 
 function AdminAttendance() {
   const [data, setData] = useState([]);

@@ -1,8 +1,14 @@
+import traceback
+
 from accounts.permission import Admin_Permission, Employee_Permission
 from attendance.views import USER
 from django.utils import timezone
 from leave.models import LeaveRequest, LeaveType
-from leave.serializer import LeaveRequestSerializer, LeaveTypeSerializer
+from leave.serializer import (
+    LeaveRequestSerializer,
+    LeaveRequestViewSerializer,
+    LeaveTypeSerializer,
+)
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -140,6 +146,8 @@ class Employee_Add_LeaveRequest(APIView):
             # leave_type = LeaveType.objects.filter(id=_data["leave_type"]).first()
             # _data["leave_type"] = leave_type.id
 
+            _data["user"] = request.user.id
+
             serializer = LeaveRequestSerializer(data=_data)
             if serializer.is_valid():
                 serializer.save()
@@ -176,10 +184,12 @@ class Admin_View_LeaveRequests(APIView):
     # for all leaves
     def get(self, request) -> Response:
         try:
-            return Response(
-                LeaveRequest.objects.all().values(), status=status.HTTP_200_OK
-            )
+            leaves = LeaveRequest.objects.all()
+            response = LeaveRequestViewSerializer(leaves, many=True)
+
+            return Response(response.data, status=status.HTTP_200_OK)
         except Exception as e:
+            print(traceback.print_exc())
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
 
     # to look for particular employee leaves

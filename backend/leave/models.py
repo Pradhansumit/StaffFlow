@@ -64,6 +64,4 @@ class LeaveRequest(models.Model):
     approved_time = models.DateTimeField(blank=True, null=True)
 
     def __str__(self) -> str:
-        return (
-            self.employee.first_name + " " + str(self.status) + " " + str(self.duration)
-        )
+        return self.user.first_name + " " + str(self.status) + " " + str(self.duration)

@@ -12,12 +12,23 @@ from django.utils import timezone
 from holiday.models import Holiday
 from leave.models import LeaveRequest
 from payment.models import BasicSalary, MonthlySalary
+from payment.serializer import BaseSalaryViewSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
 class Admin_Add_Employee_Basic_Salary(APIView):
+    permission_classes = [Admin_Permission]
+
+    def get(self, request) -> Response:
+        try:
+            base_salary = BasicSalary.objects.all()
+            response = BaseSalaryViewSerializer(base_salary, many=True)
+            return Response(response.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
     def post(self, request) -> Response:
         try:
             user = CustomUser.objects.get(id=uuid.UUID(request.data.get("user")))

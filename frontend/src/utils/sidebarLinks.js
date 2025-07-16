@@ -3,11 +3,11 @@ import {
   FaUsers,
   FaCalendarCheck,
   FaMoneyBill,
-  FaTools,
   FaFileInvoiceDollar,
   FaEnvelopeOpenText,
   FaCalendarAlt,
   FaPlane,
+  FaMoneyCheckAlt,
 } from "react-icons/fa";
 
 import { FaCodePullRequest } from "react-icons/fa6";
@@ -28,7 +28,7 @@ export const SIDEBAR_LINKS = {
     { label: "Holiday List", to: "/holiday-list", icon: FaPlane },
     { label: "Leave Requests", to: "/leave-requests", icon: FaCodePullRequest },
     { label: "Payroll", to: "/payroll", icon: FaMoneyBill },
-    { label: "Admin Panel", to: "/admin-panel", icon: FaTools },
+    { label: "Add Salary", to: "/add-salary", icon: FaMoneyCheckAlt },
   ],
   employee: [
     { label: "My Attendance", to: "/attendance", icon: FaCalendarCheck },

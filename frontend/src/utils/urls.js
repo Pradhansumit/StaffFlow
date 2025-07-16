@@ -21,5 +21,8 @@ const URLS = {
   // for leave
   leaveRequestList: "leave/leave-request/admin/list/",
   leaveRequestApprove: "leave/leave-request/admin/approve/",
+
+  // for payments
+  baseSalaryList: "payment/admin/add-basic-salary/",
 };
 export default URLS;

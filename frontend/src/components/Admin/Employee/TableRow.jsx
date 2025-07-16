@@ -14,7 +14,7 @@ function TableRow({ employee, handleDelete, onEdit }) {
         <td>
           <div className="flex items-center gap-3">
             <div className="avatar">
-              <div className="mask mask-squircle h-12 w-12">
+              <div className="rounded-full w-12">
                 <img
                   src={`${import.meta.env.VITE_API_URL}/media/${
                     employee.profile_pic

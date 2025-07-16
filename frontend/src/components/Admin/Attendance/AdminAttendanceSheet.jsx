@@ -42,7 +42,7 @@ function AdminAttendanceSheet() {
         <>
             <Breadcrumb title={"Attendance"} link={"attendance-sheet"}/>
 
-            <div className=" bg-white p-3 my-3 rounded-xl shadow">
+            <div className="bg-white p-3 my-3 rounded-xl shadow w-full">
                 <div className="flex items-center justify-between">
                     <p className="text-lg font-semibold mb-4">Attendance Sheet</p>
                     <div className="flex gap-2">
@@ -99,23 +99,24 @@ function AdminAttendanceSheet() {
                         Search
                     </button>
                 </div>
-                <div className="overflow-x-auto">
-                    <table className="table table-fixed w-max min-w-full">
+
+                <div className="overflow-x-auto mt-4">
+                    <table className="table table-compact w-full">
                         <thead>
                         <tr>
-                            <th className="sticky left-0 bg-white z-10">Employee</th>
-                            {data[0].daily_attendance.map((date) => {
+                            <th>Employee</th>
+                            {data[0]?.daily_attendance?.map((date) => {
                                 let dt = new Date(date.date);
-                                return <th key={dt.getDate()}>{dt.getDate()}</th>;
+                                return <th key={dt.getDate()} className="text-center px-2">{dt.getDate()}</th>;
                             })}
                         </tr>
                         </thead>
                         <tbody>
-                        {data.map((data) => (
-                            <tr key={data.id}>
-                                <td className="font-semibold sticky left-0 bg-white z-10">{data.name}</td>
-                                {data.daily_attendance.map((att) => (
-                                    <td>
+                        {data.map((employee) => (
+                            <tr key={employee.id}>
+                                <td className="font-semibold">{employee.name}</td>
+                                {employee.daily_attendance.map((att, index) => (
+                                    <td key={index} className="text-center px-2">
                                         {att.status.toLowerCase() === "present" ? (
                                             <FaCheckCircle color="green"/>
                                         ) : att.status.toLowerCase() === "weekend" ? (
